@@ -1,0 +1,2 @@
+node-sass --include-path scss ./src/scss/player.scss ./compiled/style/player.css
+node-sass --include-path scss ./src/scss/pong.scss ./compiled/style/pong.css

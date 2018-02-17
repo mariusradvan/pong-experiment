@@ -1,0 +1,4 @@
+rimraf ./compiled/javascript
+mkdir ./compiled/javascript
+babel ./src/client/player.js --out-file ./compiled/javascript/player.js
+babel ./src/client/pong/*.js --out-file ./compiled/javascript/pong.js

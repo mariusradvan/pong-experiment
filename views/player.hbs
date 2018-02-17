@@ -1,0 +1,30 @@
+<!doctype HTML>
+<html>
+    <head>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+      <link rel="stylesheet" href="/style/player.css">
+      <script src="/socket.io/socket.io.js"></script>
+
+      <script src="/javascript/player.js"></script>
+
+      <script type="text/javascript">
+          document.addEventListener('DOMContentLoaded', function() {
+              'use strict';
+
+              let player = new PongPlayer('http://{{ ip }}:{{ port }}');
+              let positive = document.querySelector('#positive');
+              let negative = document.querySelector('#negative');
+
+              player.registerButton(positive, player.CONST_UP);
+              player.registerButton(negative, player.CONST_DOWN);
+          });
+      </script>
+    </head>
+    <body>
+        <div id="team-header"></div>
+        <div class="button-container">
+          <div class="button positive" id="positive"></div>
+          <div class="button negative" id="negative"></div>
+        </div>
+    </body>
+</html>
