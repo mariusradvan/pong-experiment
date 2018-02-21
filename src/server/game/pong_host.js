@@ -10,8 +10,8 @@ class PongHost {
         });
     }
 
-    notifyClient (deviations) {
-        this._socket.emit(constants.events.move, deviations);
+    notifyClient(event, data) {
+        this._socket.emit(event, data);
     };
 }
 

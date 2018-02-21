@@ -8,9 +8,9 @@ class PongPlayer {
             team: 'team'
         };
 
-        this.CONST_SELECTED_CLASS = 'selected';
-        this.CONST_UP = 1;
-        this.CONST_DOWN = -1;
+        this.SELECTED_CLASS = 'selected';
+        this.UP = 1;
+        this.DOWN = -1;
 
         this._buttons = [];
         this._state = 0;
@@ -38,6 +38,66 @@ class PongPlayer {
         });
     }
 
+    _changeState(value) {
+        if (value === this._state) {
+            return;
+        }
+
+        this._state = value;
+
+        this._socket.emit(this.events.signal, value);
+
+        this._buttons.forEach(b => {
+            b.element.classList.remove(this.SELECTED_CLASS);
+        });
+        let button = this._buttons.find(b => {
+            return b.value === value;
+        });
+        if (button) {
+            if (button.vibrate) {
+                this._startVibration();
+            } else {
+                this._stopVibration();
+            }
+
+            button.element.classList.add(this.SELECTED_CLASS);
+        }
+    }
+
+    _resetState() {
+        this._state = 0;
+
+        this._buttons.forEach(b => {
+            b.element.classList.remove(this.SELECTED_CLASS);
+        });
+
+        this._stopVibration();
+    }
+
+    _startVibration() {
+        const duration = 3000;
+
+        window.navigator.vibrate(duration);
+        this._vibrateInterval = setInterval(() => {
+            try {
+                window.navigator.vibrate(duration);
+            } catch (e) {
+                // do nothing
+            }
+
+        }, duration);
+    }
+
+    _stopVibration() {
+        clearInterval(this._vibrateInterval);
+        try {
+            window.navigator.vibrate(0);
+        } catch (e) {
+            // do nothing
+        }
+
+    }
+
     registerButton(element, value, vibrate) {
         // only -1 and 1 are allowed
         if ([-1, 1].indexOf(value) === -1) {
@@ -56,67 +116,7 @@ class PongPlayer {
 
         // add click handler
         element.addEventListener('click', () => {
-           this._changeState(value);
+            this._changeState(value);
         });
-    }
-
-    _changeState(value) {
-        if (value === this._state) {
-            return;
-        }
-
-        this._state = value;
-
-        this._socket.emit(this.events.signal, value);
-
-        this._buttons.forEach(b => {
-            b.element.classList.remove(this.CONST_SELECTED_CLASS);
-        });
-        let button = this._buttons.find(b => {
-            return b.value === value;
-        });
-        if (button) {
-           if (button.vibrate) {
-               this._startVibration();
-           } else {
-               this._stopVibration();
-           }
-
-           button.element.classList.add(this.CONST_SELECTED_CLASS);
-        }
-    }
-
-    _resetState() {
-        this._state = 0;
-
-        this._buttons.forEach(b => {
-            b.element.classList.remove(this.CONST_SELECTED_CLASS);
-        });
-
-        this._stopVibration();
-    }
-
-    _startVibration() {
-        const duration = 3000;
-
-        window.navigator.vibrate(duration);
-        this._vibrateInterval = setInterval(() => {
-            try {
-                window.navigator.vibrate(duration);
-            } catch(e) {
-                // do nothing
-            }
-
-        }, duration);
-    }
-
-    _stopVibration() {
-        clearInterval(this._vibrateInterval);
-        try {
-            window.navigator.vibrate(0);
-        } catch (e) {
-            // do nothing
-        }
-
     }
 }

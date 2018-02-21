@@ -8,10 +8,16 @@
 
   <script type="text/javascript">
       document.addEventListener('DOMContentLoaded', function() {
+          var container = document.querySelector('.pong-container');
           new Pong('http://{{ ip }}:{{ port }}');
       });
   </script>
 </head>
 <body>
+    <div class="pong-header">
+        <div class="pong-score"></div>
+        <div class="pong-reset">reset</div>
+    </div>
+    <div class="pong-container"></div>
 </body>
 </html>

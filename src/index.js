@@ -27,6 +27,7 @@ app.use((req, res, next) => {
 
 app.use('/javascript', express.static(path.join(__dirname, '../compiled/javascript')));
 app.use('/style', express.static(path.join(__dirname, '../compiled/style')));
+app.use('/public', express.static(path.join(__dirname, '../public')));
 
 // view engine setup
 app.set('views', path.join(__dirname, '../views'));

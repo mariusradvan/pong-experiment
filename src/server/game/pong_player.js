@@ -1,11 +1,12 @@
 const constants = require('../constants');
 
 class PongPlayer {
-    constructor(socket) {
+    constructor(socket, game) {
         this._id = socket.id;
         this._socket = socket;
         this._team = null;
         this._position = 0;
+        this._game = game;
     }
 
     get id() {
@@ -55,6 +56,8 @@ class PongPlayer {
         this._id = null;
         this._socket = null;
         this._team = null;
+
+        this._game.sendPlayerInfo();
     }
 }
 

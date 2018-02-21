@@ -1,20 +1,28 @@
 class Paddle {
-    constructor(team, container, context) {
-        this.CONST_POSITION_LEFT = 'left';
-        this.CONST_POSITION_RIGHT = 'right';
+    constructor(team, canvas) {
 
         this._name = team.name;
         this._color = team.color;
         this._team = team;
-        this._bounds = this._computeInitialBounds(container);
+
+        this._canvas = canvas;
+        this._context = canvas.getContext('2d');
+
+        this._bounds = this._computeInitialBounds({
+            width: this._canvas.width,
+            height: this._canvas.height
+        });
 
         this._x = this._bounds.x;
         this._y = this._bounds.y;
-        this._context = context;
     }
 
     get name() {
         return this._name;
+    }
+
+    get position() {
+        return this._team.position;
     }
 
     _computeInitialBounds(container) {
@@ -23,12 +31,12 @@ class Paddle {
 
         // set paddle width to 1.25% of the canvas
         paddleWidth = container.width / 80;
-        // set paddle height to 30% of the canvas
-        paddleHeight = container.height * 6 / 10;
+        // set paddle height to 35% of the canvas
+        paddleHeight = container.height * 3.5 / 10;
 
-        if (this._team.position === this.CONST_POSITION_LEFT) {
+        if (this._team.position === 'left') {
             x = margin;
-        } else if (this._team.position === this.CONST_POSITION_RIGHT) {
+        } else if (this._team.position === 'right') {
             x = container.width - margin - paddleWidth;
         }
         y = (container.height - paddleHeight) / 2;
@@ -43,7 +51,7 @@ class Paddle {
         };
     }
 
-    render() {
+    draw() {
         this._context.fillStyle = this._color;
         this._context.fillRect(
             this._x,
@@ -57,7 +65,7 @@ class Paddle {
         let distance = (this._bounds.parentHeight - this._bounds.height) / 2;
         let delta = distance * percent;
 
-        this._y = this._bounds.y + delta;
+        this._y = this._bounds.y - delta;
     }
 
     getBounds() {

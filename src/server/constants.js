@@ -8,7 +8,8 @@ module.exports = {
         disconnect: 'disconnect',
         team: 'team',
         spec: 'spec',
-        playerSignal: 'signal'
+        playerSignal: 'signal',
+        info: 'info'
     },
 
     teams: [{
@@ -17,7 +18,7 @@ module.exports = {
         position: 'left'
     }, {
         name: 'second',
-        color: '#0085ca',
+        color: '#74d1ea',
         position: 'right'
     }],
 

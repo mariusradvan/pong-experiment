@@ -5,6 +5,53 @@ html, body {
   padding: 0;
   width: 100%;
 }
-#pong {
+body {
+  background: url('/public/pong-background.jpg') center center no-repeat;
+  background-size: 100% 100%;
 
+  font-family: sans-serif;
+}
+
+.pong-header {
+  height: 50px;
+  position: absolute;
+  width: 100%;
+
+  .pong-score {
+    background: rgba(0, 0, 0, .6);
+    color: rgba(255, 255, 255, .8);
+    font-size: 28px;
+    height: 50px;
+    left: calc(50% - 50px);
+    line-height: 50px;
+    position: absolute;
+    top: 0;
+    text-align: center;
+    width: 100px;
+  }
+
+  .pong-reset {
+    background: rgba(0, 0, 0, 0);
+    border-radius: 25px;
+    color: rgba(0, 0, 0, 0);
+    cursor: pointer;
+    height: 50px;
+    line-height: 50px;
+    position: absolute;
+    right: 0;
+    text-align: center;
+    top: 0;
+    user-select: none;
+    width: 50px;
+
+    &:hover {
+      background: rgba(167, 65, 69, .3);
+      color: rgba(255, 255, 255, .3);
+    }
+  }
+}
+
+.pong-container {
+  height: 100%;
+  width: 100%;
 }
