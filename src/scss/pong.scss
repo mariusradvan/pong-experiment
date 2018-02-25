@@ -15,11 +15,13 @@ body {
 .pong-header {
   height: 50px;
   position: absolute;
+  user-select: none;
   width: 100%;
 
   .pong-score {
     background: rgba(0, 0, 0, .6);
     color: rgba(255, 255, 255, .8);
+    cursor: default;
     font-size: 28px;
     height: 50px;
     left: calc(50% - 50px);
@@ -41,7 +43,6 @@ body {
     right: 0;
     text-align: center;
     top: 0;
-    user-select: none;
     width: 50px;
 
     &:hover {

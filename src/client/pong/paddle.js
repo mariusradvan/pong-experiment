@@ -8,6 +8,12 @@ class Paddle {
         this._canvas = canvas;
         this._context = canvas.getContext('2d');
 
+        const image = new Image();
+        image.src = '/public/pattern.png';
+        image.onload = () => {
+            this._pattern = this._context.createPattern(image, 'repeat');
+        };
+
         this._bounds = this._computeInitialBounds({
             width: this._canvas.width,
             height: this._canvas.height
@@ -52,13 +58,31 @@ class Paddle {
     }
 
     draw() {
-        this._context.fillStyle = this._color;
-        this._context.fillRect(
+        this._draw(
             this._x,
             this._y,
             this._bounds.width,
-            this._bounds.height
-        );
+            this._bounds.height,
+            this._bounds.width / 2.5
+        )
+    }
+
+    _draw(x, y, w, h, radius) {
+        this._context.beginPath();
+        this._context.moveTo(x + radius, y);
+        this._context.lineTo(x + w - radius, y);
+        this._context.quadraticCurveTo(x + w, y, x + w, y + radius);
+        this._context.lineTo(x + w, y + h - radius);
+        this._context.quadraticCurveTo(x + w, y + h, x + w - radius, y + h);
+        this._context.lineTo(x + radius, y + h);
+        this._context.quadraticCurveTo(x, y + h, x, y + h - radius);
+        this._context.lineTo(x, y + radius);
+        this._context.quadraticCurveTo(x, y, x + radius, y);
+
+        [this._color, this._pattern].forEach((fillStyle) => {
+            this._context.fillStyle = fillStyle;
+            this._context.fill();
+        });
     }
 
     updatePosition(percent) {

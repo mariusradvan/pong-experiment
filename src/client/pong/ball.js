@@ -15,15 +15,18 @@ class Ball {
 
         this._image = new Image();
         this._image.src = '/public/pong-sun.png';
+
+        this._imageOnReset = new Image();
+        this._imageOnReset.src = '/public/pong-sun-reset.png';
     }
 
     _randomizeInitialSpeed() {
         this._speed = {
-            x: this.constructor.randomInRange(7, 12) * Math.pow(
+            x: this.constructor.randomInRange(12, 17) * Math.pow(
                 -1,
                 this.constructor.randomInRange(0, 1)
             ),
-            y: this.constructor.randomInRange(5, 10) * Math.pow(
+            y: this.constructor.randomInRange(10, 15) * Math.pow(
                 -1,
                 this.constructor.randomInRange(0, 1)
             )
@@ -53,7 +56,7 @@ class Ball {
 
     _updatePosition() {
         // let margin = this._bounds.radius / 2;
-        let margin = 0;
+        let margin = this._bounds.radius;
 
         this._x += this._speed.x;
         this._y += this._speed.y;
@@ -97,19 +100,21 @@ class Ball {
     draw() {
         if (!this._pause) {
             this._updatePosition();
+            this._step = 0;
+        } else {
+            this._step = this._step || 0;
+            this._step += 1;
         }
 
-        // this._context.beginPath();
-        // this._context.arc(this._x, this._y, this._bounds.radius, 0, 2 * Math.PI, false);
-        // this._context.fillStyle = this._color;
-        // this._context.fill();
+        const image = this._pause ? this._imageOnReset : this._image;
+        const sign = this._step < 10 ? 1 : -1;
 
         this._context.drawImage(
-            this._image,
-            this._x - this._bounds.radius,
-            this._y - this._bounds.radius,
-            this._bounds.radius * 2,
-            this._bounds.radius * 2
+            image,
+            this._x - this._bounds.radius - sign * (this._step),
+            this._y - this._bounds.radius - sign * (this._step),
+            this._bounds.radius * 2 + sign * (this._step * 2),
+            this._bounds.radius * 2 + sign * (this._step * 2)
         )
     }
 
