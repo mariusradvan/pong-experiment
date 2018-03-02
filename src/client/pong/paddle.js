@@ -68,6 +68,12 @@ class Paddle {
     }
 
     _draw(x, y, w, h, radius) {
+        const gradient = this._context.createLinearGradient(x, y, x, y + h);
+        gradient.addColorStop(0, '#00ab84');
+        gradient.addColorStop(0.2, this._color);
+        gradient.addColorStop(0.8, this._color);
+        gradient.addColorStop(1, '#a74145');
+
         this._context.beginPath();
         this._context.moveTo(x + radius, y);
         this._context.lineTo(x + w - radius, y);
@@ -79,7 +85,7 @@ class Paddle {
         this._context.lineTo(x, y + radius);
         this._context.quadraticCurveTo(x, y, x + radius, y);
 
-        [this._color, this._pattern].forEach((fillStyle) => {
+        [gradient, this._pattern].forEach((fillStyle) => {
             this._context.fillStyle = fillStyle;
             this._context.fill();
         });
