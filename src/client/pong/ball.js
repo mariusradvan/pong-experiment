@@ -86,7 +86,10 @@ class Ball {
                     this._speed.x = -this._speed.x;
                 } else {
                     // game over
-                    this._pong.registerWin(paddle.position);
+                    const winner = this._pong.paddles.filter(_paddle => {
+                        return _paddle.position !== paddle.position;
+                    })[0];
+                    this._pong.score(winner.position);
                     this._pause = true;
                     setTimeout(() => {
                         this.restart();

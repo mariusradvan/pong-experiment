@@ -194,7 +194,7 @@ class Pong {
         return filtered[0] || null;
     }
 
-    registerWin(position) {
+    score(position) {
         const team = this._getTeamByPosition(position);
         this._score[team.name] += 1;
 
