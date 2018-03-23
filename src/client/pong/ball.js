@@ -21,12 +21,14 @@ class Ball {
     }
 
     _randomizeInitialSpeed() {
+        const speed = this._bounds.radius / 2.9;
+
         this._speed = {
-            x: this.constructor.randomInRange(12, 17) * Math.pow(
+            x: this.constructor.randomInRange(speed * 1.1, speed * 1.4) * Math.pow(
                 -1,
                 this.constructor.randomInRange(0, 1)
             ),
-            y: this.constructor.randomInRange(10, 15) * Math.pow(
+            y: this.constructor.randomInRange(speed, speed * 1.3) * Math.pow(
                 -1,
                 this.constructor.randomInRange(0, 1)
             )
